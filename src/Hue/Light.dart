@@ -21,17 +21,29 @@ class Light {
     modelid = builder.modelid;
 
   Light getLightByString(String str, Hue device) {
-    Light l = ( new LightBuilder(device.id, device.ip)
+    Light l = ( new LightBuilder(device.id, device.ip, device.username)
                 ..set_name('')
               ).build();
   }
+
+  String toString() {
+    return '''
+      --- LIGHT (uid=${this.uniqueid}) ---
+      ON:\t${this.on.toString()}
+      TYPE:\t${this.type}
+      NAME:\t${this.name}
+      MODELID:\t${this.modelid}
+    ''';
+  }
+
+  
 }
 
 /**
- * Builder Pattern
+ * Builder Pattern --> build with Java extension
  */
 class LightBuilder extends Hue {
-  LightBuilder(String id, String ip) : super(id, ip);
+  LightBuilder(String id, String ip, String username) : super(id, ip, username: username);
 
   bool on;
   String type;
@@ -50,3 +62,5 @@ class LightBuilder extends Hue {
     return Light._builder(this);
   }
 }
+
+

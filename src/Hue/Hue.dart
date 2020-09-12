@@ -12,9 +12,10 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
   String _username;
 
   //  |-------------->    Constructor
-  Hue(String id, String ip) {
+  Hue(String id, String ip, {String username}) {
     this._id = id;
     this._ip = ip;
+    this._username = username;
   }
 
   //  |-------------->    Getters / Setters

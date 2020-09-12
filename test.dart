@@ -1,5 +1,6 @@
 
 import 'src/Hue/Hue.dart';
+import 'src/Hue//Light.dart';
 
 void main() {
   init();
@@ -22,7 +23,17 @@ void init() async {
     }
 
     print(bridge);
-    print(await bridge.getLights());
+    await bridge.getLights();
+
+
+    Light light = (
+      LightBuilder(bridge.id, bridge.ip, bridge.username)
+      ..set_name('Mon nom')
+      ..set_on(true)
+      ..set_type('mon type')
+    ).build(); 
+    print(light);
+    
   }
 
 
