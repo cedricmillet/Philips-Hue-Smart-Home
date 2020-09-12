@@ -11,6 +11,7 @@ void main() {
 void init() async {
   print('--- STARTING ---');
 
+  //  Get connected bridge on local network
   Hue bridge = await Hue.getBridge();
   if(bridge==null) throw "BRIDGE INTROUVABLE";
 
@@ -26,18 +27,19 @@ void init() async {
 
   print(bridge);
 
-  //  LIGHTS 
-  await bridge.getLights();
+  //  Get all lights 
+  var lights = await bridge.getLights();
 
-  Light light = (
-    LightBuilder(bridge.id, bridge.ip, bridge.username)
-    ..set_name('Mon nom')
-    ..set_on(true)
-    ..set_type('mon type')
-  ).build(); 
-  print(light);
+  //  Display lights data
+  for (var l in lights) {
+    print(">>>>>>>>>>>>");
+    print(l);
+    print("<<<<<<<<<<<<");
+  }
 
-
+  //  Switch OFF all lights
+  for (var l in lights)
+    l.off();
 
 
 
