@@ -1,5 +1,7 @@
 import 'package:http/http.dart' as http;
-import 'dart:convert';  //  JSON serialisation
+import 'dart:convert';
+
+import 'Light.dart';  //  JSON serialisation
 
 
 abstract class Device { }
@@ -64,6 +66,31 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
     var res = await http.get('http://${this.ip}/api/${this.username}/lights');
     if(res.statusCode != 200) return null;
 
+    var lights = jsonDecode(res.body);
+    print("LIGHTS FOUND : " + lights.length.toString());
+
+    for(int i=1;i<=lights.length;i++) {
+      var lyt = lights[i.toString()];
+      
+      //  create light instance
+      Light light = new Light(id, ip, username);
+      light
+        ..setUID(i)
+        ..set_on(lyt['state']['on'])
+        ..set_type(lyt['type'])
+        ..set_name(lyt['name'])
+        ..set_modelid(lyt['modelid'])
+        ..set_productname(lyt['productname'])
+        ..set_productid(lyt['productid'])
+        ..set_uniqueid(lyt['uniqueid'])
+        ;
+      print(light);
+
+      // switch off light
+      light.on();
+      
+      print('--------');
+    }
     return res.body;
     
   }
