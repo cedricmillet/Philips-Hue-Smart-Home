@@ -22,7 +22,7 @@ class Light extends Hue {
   String _productid;
   String _uniqueid;
 
-
+  //  Setters
   void set_on(bool s)             { this._on = s; }
   void set_type(String s)         { this._type = s; }
   void set_name(String s)         { this._name = s; }
@@ -58,20 +58,29 @@ class Light extends Hue {
     ''';
   }
 
-  void off() async {
+  Future<bool> off() async {
     print(">> OFF()");
-    await this.toggleState(false);
+    return await this.toggleState(false);
   }
 
-  void on() async {
+  Future<bool> on() async {
     print(">> ON()");
-    await this.toggleState(true);
+    return await this.toggleState(true);
   }
 
-  void toggleState(bool state) async {
-    var url = 'http://${ip}/api/${username}/lights/${_uid.toString()}/state';
+  Future<bool> toggleState(bool state) async {
+    if(this.username==null) throw 'Cannot toggleState() without valid username.';
+
+    final url = 'http://${ip}/api/${username}/lights/${_uid.toString()}/state';
+    print(url + " - " + state.toString());
     var res = await http.put(url, body: '{"on": ${state == false ? "false" : "true"}}');
-    if(res.statusCode != 200 || res.body.contains('error')) throw 'ERREUR toggleState() !';
+    if( res.statusCode != 200 
+        || res.body.contains('error')
+        || !res.body.contains('success')  ) {
+      print( "Light.toggleState(flag) ERROR : " + res.toString() );
+      return false;
+    }
+    return true;
   }
 
 

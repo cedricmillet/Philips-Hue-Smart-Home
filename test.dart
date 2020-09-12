@@ -40,8 +40,7 @@ void init() async {
   //  Switch OFF all lights
   for (var l in lights)
     l.off();
-
-
+    
 
   print('--- END OF INIT() ---');
 }

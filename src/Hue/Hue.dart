@@ -73,7 +73,7 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
     for(int i=1;i<=lights.length;i++) {
       var lyt = lights[i.toString()];
       
-      //  create light instance
+      //  create & append new light instance
       Light light = new Light(id, ip, username);
       light
         ..setUID(i)
@@ -85,13 +85,7 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
         ..set_productid(lyt['productid'])
         ..set_uniqueid(lyt['uniqueid'])
         ;
-      
       availableLightsArray.add(light);
-      // switch off light
-      //print(light);
-      //light.on();
-      
-      print('--------');
     }
     return availableLightsArray;
     
