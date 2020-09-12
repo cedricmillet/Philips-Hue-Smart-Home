@@ -2,6 +2,6 @@
 
 # Hue Smart Home Controller
 
-A little library written in Dart, in order to manipulate sensors et lights states of Philips Hue family.
+A little library written in Dart, in order to manipulate sensors & lights states of Philips Hue family.
 
 * [Official Philips Hue documentation](https://developers.meethue.com/)
