@@ -7,6 +7,7 @@ import 'Hue.dart';
  */
 class Light extends Hue {
   Light(String id, String ip, String username) : super(id, ip, username: username);
+
   //  Numéro pour les appels api --> /lights/${uid}/state
   int _uid;
     void setUID(int i) {
@@ -23,15 +24,24 @@ class Light extends Hue {
   String _uniqueid;
 
   //  Setters
-  void set_on(bool s)             { this._on = s; }
-  void set_type(String s)         { this._type = s; }
-  void set_name(String s)         { this._name = s; }
-  void set_modelid(String s)      { this._modelid = s; }
-  void set_productname(String s)  { this._productname = s; }
-  void set_productid(String s)    { this._productid = s; }
-  void set_uniqueid(String s)     { this._uniqueid = s; }
+  void set_on(bool s)             { _on = s; }
+  void set_type(String s)         { _type = s; }
+  void set_name(String s)         { _name = s; }
+  void set_modelid(String s)      { _modelid = s; }
+  void set_productname(String s)  { _productname = s; }
+  void set_productid(String s)    { _productid = s; }
+  void set_uniqueid(String s)     { _uniqueid = s; }
   
-  
+  //  Getters
+  bool get_on()             => _on;
+  String get_type()         => _type;
+  String get_name()         => _name;
+  String get_modelid()      => _modelid;
+  String get_productname()  => _productname; 
+  String get_productid()    => _productid;
+  String get_uniqueid()     => _uniqueid;
+
+
   /*
   Light._builder(LightBuilder builder) : 
     on = builder.on,

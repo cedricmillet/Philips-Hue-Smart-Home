@@ -6,6 +6,9 @@ import 'Light.dart';  //  JSON serialisation
 
 abstract class Device { }
 
+/**
+ * Hue bridge device entity
+ */
 class Hue extends Device {      //  https://developers.meethue.com/develop/hue-api/
   
   //  |-------------->    Private attributes
@@ -44,7 +47,7 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
   //  |-------------->    Instance Methods
 
   /**
-   * Generate bridge username
+   * Generate new bridge username
    */
   Future<bool> generateUsername(String deviceType) async {
     var res = await http.post('http://${this._ip}/api/', body: '{"devicetype":"${deviceType}"}');
@@ -55,6 +58,8 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
       print("Failed getUsername() : " + res.body.toString());
       return false;
     }
+
+    
   }
 
   /**

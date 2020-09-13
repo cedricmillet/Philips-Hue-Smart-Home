@@ -1,6 +1,6 @@
 
-import 'src/Hue/Hue.dart';
-import 'src/Hue//Light.dart';
+import 'lib/Hue/Hue.dart';
+import 'lib/Hue//Light.dart';
 
 void main() {
   init();
@@ -22,7 +22,9 @@ void init() async {
   if(bridge.username == null) {
     print('AUCUN USERNAME DETECTE... GENERATION.');
     bool generation = await bridge.generateUsername('chambre_cedric');
-    if(generation) { }
+    if(generation) {
+      print('La generation de votre username est un success : ${bridge.username}');
+    }
   }
 
   print(bridge);
@@ -40,7 +42,10 @@ void init() async {
   //  Switch OFF all lights
   for (var l in lights)
     l.off();
-    
+  
+  //  Manipulate specific light
+  Light m = lights[0] as Light;
+  print('STATE: ${m.get_on()}');
 
   print('--- END OF INIT() ---');
 }
