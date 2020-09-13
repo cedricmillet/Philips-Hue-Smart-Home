@@ -30,20 +30,23 @@ void init() async {
   print(bridge);
 
   //  Get all lights 
-  var lights = await bridge.getLights();
+  List<Light> lights = await Light.getAll(bridge, {true});
 
   //  Display lights data
-  for (var l in lights) {
+  for (Light l in lights) {
     print(">>>>>>>>>>>>");
     print(l);
     print("<<<<<<<<<<<<");
   }
 
   //  Switch OFF all lights
-  for (var l in lights) {
+  for (Light l in lights) {
     //l.on();
-    l.bri(50);
+    //l.bri(50);
+    l..on()..bri(10);
   }
+
+  
   
   //  Manipulate specific light
   Light m = lights[0] as Light;

@@ -1,6 +1,7 @@
 
 import 'package:http/http.dart' as http;
 import 'Hue.dart';
+import 'dart:convert';
 
 /**
  * Appareil Philips HUE : Ampoule connectée
@@ -10,9 +11,7 @@ class Light extends Hue {
 
   //  Numéro pour les appels api --> /lights/${uid}/state
   int _uid;
-    void setUID(int i) {
-    _uid = i;
-  }
+  void setUID(int i) {  _uid = i;  }
 
   //  Attributs des ampoules
   bool _on;
@@ -125,6 +124,44 @@ class Light extends Hue {
       PRODUCT_ID:\t${this._productid}
       UNIQUE_ID:\t${this._uniqueid}
     ''';
+  }
+
+  /**
+   * Get list of available lights
+   */
+  static Future<List<Light>> getAll(Hue bridge, Set<bool> set, {bool onlyReachableLights=true}) async {
+    if(bridge.username==null) throw 'Cannot getLights() without valid username.';
+    
+    var res = await http.get('http://${bridge.ip}/api/${bridge.username}/lights');
+    if(res.statusCode != 200) return null;
+
+    var lights = jsonDecode(res.body);
+    //print(lights);
+    print("LIGHTS FOUND : " + lights.length.toString());
+    List<Light> availableLightsArray = new List<Light>();
+
+    for(int i=1;i<=lights.length;i++) {
+      var lyt = lights[i.toString()];
+      if(onlyReachableLights && lyt['state']['reachable'] != true)  continue;
+
+      //  create & append new light instance
+      Light light = new Light(bridge.id, bridge.ip, bridge.username);
+      light
+        ..setUID(i)
+        ..set_reachable(lyt['state']['reachable'])
+        ..set_on(lyt['state']['on'])
+        ..set_type(lyt['type'])
+        ..set_name(lyt['name'])
+        ..set_modelid(lyt['modelid'])
+        ..set_productname(lyt['productname'])
+        ..set_productid(lyt['productid'])
+        ..set_uniqueid(lyt['uniqueid'])
+        ;
+
+      availableLightsArray.add(light);
+    }
+    return availableLightsArray;
+    
   }
   
 }

@@ -17,7 +17,7 @@ Future<void> demo() async {
   bridge.username = 'wduRf8BKAppZ2noNbnpkp4r4pED0sas22A-1-UMV';
 
   //  Get all lights 
-  List<Light> lights = await bridge.getLights() as List<Light>;
+  List<Light> lights = await Light.getAll(bridge, {true});
   if(lights.length == 0) throw 'No light detected.';
 
   //  Display lights data
