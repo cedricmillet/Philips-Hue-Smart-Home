@@ -30,7 +30,11 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
   void set username(String uname) { this._username = uname; }
 
   //  |-------------->    Static Methods
-  static getBridge() async {
+
+  /**
+   * Detect and get bridge automatically
+   */
+  static Future<Hue> getBridgeAuto() async {
     var res = await http.get("https://discovery.meethue.com/");
     if(res.statusCode != 200) {
       print('ERREUR DETECTION BRIDGE !');
@@ -42,6 +46,24 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
     
     var bridge = bridges[0];
     return new Hue(bridge['id'], bridge['internalipaddress']);
+  }
+
+  /**
+   * Detect and get Hue bridge manually
+   */
+  static Future<Hue> getBridgeManually(String internalipaddress) async {
+    final Hue manualBridge = new Hue(null, internalipaddress);
+    return (await Hue.exists(manualBridge)) ? manualBridge : null;
+  }
+
+  /**
+   * Check if specified bridge is reachable on local network
+   */
+  static Future<bool> exists(Hue hueBridge) async {
+    var res = await http.get('http://${hueBridge.ip}/api/config');
+    if(res.statusCode != 200) return false;
+    if(res.body.length==0 || res.body.contains('error'))  return false;
+    return true;
   }
 
   //  |-------------->    Instance Methods

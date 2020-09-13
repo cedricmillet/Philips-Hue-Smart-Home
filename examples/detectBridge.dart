@@ -9,7 +9,7 @@ void main() => demo();
 
 Future<void> demo() async {
   //  Get connected bridge on local network
-  Hue bridge = await Hue.getBridge();
+  Hue bridge = await Hue.getBridgeAuto();
 
   if(bridge==null) {
     print("No bridge connected on local network.");

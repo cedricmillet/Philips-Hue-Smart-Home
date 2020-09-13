@@ -12,7 +12,7 @@ void init() async {
   print('--- STARTING ---');
 
   //  Get connected bridge on local network
-  Hue bridge = await Hue.getBridge();
+  Hue bridge = await Hue.getBridgeAuto();
   if(bridge==null) throw "BRIDGE INTROUVABLE";
 
   //  DEV ONLY
