@@ -87,7 +87,7 @@ class Light extends Hue {
   }
 
   /**
-   * Mired Color temperature of the light in Kevin (153 to 500)
+   * Mired Color temperature of the light in Kelvin (153 to 500)
    */
   Future<bool> ct(int n) async {
     if(n<153)   n=153;
@@ -98,7 +98,7 @@ class Light extends Hue {
 
   Future<bool> _setLightState(String name, String value) async {
     if(this.username==null) throw 'Cannot _setLightState() without valid username.';
-    bool stringIsBoolean(String s) { s = s.toLowerCase();  return s=="true"||s==false ? true : false; }
+    bool stringIsBoolean(String s) { s = s.toLowerCase();  return s=="true"||s=="false" ? true : false; }
     bool string2Bool(String s) { return s.toLowerCase()=="true" ? true : false;  }
     final url = 'http://${ip}/api/${username}/lights/${_uid.toString()}/state';
     var res = await http.put(url, body: '{"${name}": ${stringIsBoolean(value) ? string2Bool(value) : value}}');
