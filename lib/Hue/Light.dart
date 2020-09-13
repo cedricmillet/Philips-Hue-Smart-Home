@@ -47,16 +47,12 @@ class Light extends Hue {
   /**
    * Switch ON light
    */
-  Future<bool> off() async {
-    return await _setLightState("on", "false");
-  }
+  Future<bool> off() async => await _setLightState("on", "false");
 
   /**
    * Switch OFF light
    */
-  Future<bool> on() async {
-    return await _setLightState("on", "true");
-  }
+  Future<bool> on() async => await _setLightState("on", "true");
 
   /**
    * Set lamp brightness (uint8 => from 1 to 254)

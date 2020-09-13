@@ -87,7 +87,7 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
    */
   String toString() {
     String res = '';
-    res += '\x1B[94mBRIDGE\t{ID:\t${this.id}\tIPv4:\t${this.ip}\tusername:\t${this.username}}\x1B[0m';
+    res += '\x1B[94mBRIDGE\t{ID:\t${this._id}\tIPv4:\t${this._ip}\tusername:\t${this._username}}\x1B[0m';
     return res;
   }
 
