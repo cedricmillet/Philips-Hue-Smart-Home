@@ -125,7 +125,7 @@ class Light extends Hue {
   /**
    * Get list of available lights
    */
-  static Future<List<Light>> getAll(Hue bridge, Set<bool> set, {bool onlyReachableLights=true}) async {
+  static Future<List<Light>> getAll(Hue bridge, {bool onlyReachableLights=true}) async {
     if(bridge.username==null) throw 'Cannot getLights() without valid username.';
     
     var res = await http.get('http://${bridge.ip}/api/${bridge.username}/lights');

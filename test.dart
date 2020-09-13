@@ -30,7 +30,7 @@ void init() async {
   print(bridge);
 
   //  Get all lights 
-  List<Light> lights = await Light.getAll(bridge, {true});
+  List<Light> lights = await Light.getAll(bridge);
 
   //  Display lights data
   for (Light l in lights) {
