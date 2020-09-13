@@ -1,6 +1,6 @@
 
 import 'lib/Hue/Hue.dart';
-import 'lib/Hue//Light.dart';
+import 'lib/Hue/Light.dart';
 
 void main() {
   init();
@@ -40,8 +40,10 @@ void init() async {
   }
 
   //  Switch OFF all lights
-  for (var l in lights)
-    l.off();
+  for (var l in lights) {
+    //l.on();
+    l.bri(50);
+  }
   
   //  Manipulate specific light
   Light m = lights[0] as Light;

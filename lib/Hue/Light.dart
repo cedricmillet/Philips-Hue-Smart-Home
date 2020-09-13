@@ -16,6 +16,7 @@ class Light extends Hue {
 
   //  Attributs des ampoules
   bool _on;
+  bool _reachable;
   String _type;
   String _name;
   String _modelid;
@@ -25,6 +26,7 @@ class Light extends Hue {
 
   //  Setters
   void set_on(bool s)             { _on = s; }
+  void set_reachable(bool s)      { _reachable = s; }
   void set_type(String s)         { _type = s; }
   void set_name(String s)         { _name = s; }
   void set_modelid(String s)      { _modelid = s; }
@@ -34,6 +36,7 @@ class Light extends Hue {
   
   //  Getters
   bool get_on()             => _on;
+  bool get_reachable()      => _reachable;
   String get_type()         => _type;
   String get_name()         => _name;
   String get_modelid()      => _modelid;
@@ -42,18 +45,74 @@ class Light extends Hue {
   String get_uniqueid()     => _uniqueid;
 
 
-  /*
-  Light._builder(LightBuilder builder) : 
-    on = builder.on,
-    type = builder.type,
-    name = builder.name,
-    modelid = builder.modelid;
+  /**
+   * Switch ON light
+   */
+  Future<bool> off() async {
+    return await _setLightState("on", "false");
+  }
 
-  Light getLightByString(String str, Hue device) {
-    Light l = ( new LightBuilder(device.id, device.ip, device.username)
-                ..set_name('')
-              ).build();
-  }*/
+  /**
+   * Switch OFF light
+   */
+  Future<bool> on() async {
+    return await _setLightState("on", "true");
+  }
+
+  /**
+   * Set lamp brightness (uint8 => from 1 to 254)
+   */
+  Future<bool> bri(int brightness) async {
+    if(brightness<1)    brightness=1;
+    if(brightness>254)  brightness=254;
+    return await _setLightState("bri", '${brightness}');
+  }
+
+  /**
+   * Saturation of the light. 254 is the most saturated (colored) and 0 is the least saturated (white).
+   */
+  Future<bool> sat(int saturation) async {
+    if(saturation<0)    saturation=0;
+    if(saturation>254)  saturation=254;
+    return await _setLightState("sat", '${saturation}');
+  }
+
+  /**
+   * Hue of the light. Programming 0 and 65535 would mean that the light will resemble the color red, 21845 for green and 43690 for blue.
+   */
+  Future<bool> hue(int hue) async {
+    if(hue<0)     hue=0;
+    if(hue>65535) hue=65535;
+    return await _setLightState("hue", '${hue}');
+  }
+
+  /**
+   * Mired Color temperature of the light in Kevin (153 to 500)
+   */
+  Future<bool> ct(int n) async {
+    if(n<153)   n=153;
+    if(n>500)   n=500;
+    return await _setLightState("ct", '${n}');
+  }
+
+
+  Future<bool> _setLightState(String name, String value) async {
+    if(this.username==null) throw 'Cannot _setLightState() without valid username.';
+    bool stringIsBoolean(String s) { s = s.toLowerCase();  return s=="true"||s==false ? true : false; }
+    bool string2Bool(String s) { return s.toLowerCase()=="true" ? true : false;  }
+    final url = 'http://${ip}/api/${username}/lights/${_uid.toString()}/state';
+    var res = await http.put(url, body: '{"${name}": ${stringIsBoolean(value) ? string2Bool(value) : value}}');
+    if( res.statusCode != 200 
+        || res.body.contains('error')
+        || !res.body.contains('success')  ) {
+      print( '[${get_name().toUpperCase()}] - ERROR when trying to update state: ' + res.body.toString() );
+      return false;
+    }
+    return true;
+  }
+
+
+
 
   String toString() {
     return '''
@@ -67,36 +126,6 @@ class Light extends Hue {
       UNIQUE_ID:\t${this._uniqueid}
     ''';
   }
-
-  Future<bool> off() async {
-    print(">> OFF()");
-    return await this.toggleState(false);
-  }
-
-  Future<bool> on() async {
-    print(">> ON()");
-    return await this.toggleState(true);
-  }
-
-  Future<bool> toggleState(bool state) async {
-    if(this.username==null) throw 'Cannot toggleState() without valid username.';
-
-    final url = 'http://${ip}/api/${username}/lights/${_uid.toString()}/state';
-    print(url + " - " + state.toString());
-    var res = await http.put(url, body: '{"on": ${state == false ? "false" : "true"}}');
-    if( res.statusCode != 200 
-        || res.body.contains('error')
-        || !res.body.contains('success')  ) {
-      print( "Light.toggleState(flag) ERROR : " + res.toString() );
-      return false;
-    }
-    return true;
-  }
-
-
-
-
-
   
 }
 

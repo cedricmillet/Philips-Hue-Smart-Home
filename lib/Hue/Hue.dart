@@ -65,23 +65,26 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
   /**
    * Get list of available lights
    */
-  Future<List<Light>> getLights() async {
+  Future<List<Light>> getLights({bool onlyReachableLights=true}) async {
     if(this.username==null) throw 'Cannot getLights() without valid username.';
     
     var res = await http.get('http://${this.ip}/api/${this.username}/lights');
     if(res.statusCode != 200) return null;
 
     var lights = jsonDecode(res.body);
+    print(lights);
     print("LIGHTS FOUND : " + lights.length.toString());
     List<Light> availableLightsArray = new List<Light>();
 
     for(int i=1;i<=lights.length;i++) {
       var lyt = lights[i.toString()];
-      
+      if(onlyReachableLights && lyt['state']['reachable'] != true)  continue;
+
       //  create & append new light instance
       Light light = new Light(id, ip, username);
       light
         ..setUID(i)
+        ..set_reachable(lyt['state']['reachable'])
         ..set_on(lyt['state']['on'])
         ..set_type(lyt['type'])
         ..set_name(lyt['name'])
@@ -90,6 +93,7 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
         ..set_productid(lyt['productid'])
         ..set_uniqueid(lyt['uniqueid'])
         ;
+
       availableLightsArray.add(light);
     }
     return availableLightsArray;
