@@ -1,6 +1,6 @@
 
 import 'lib/Hue/Hue.dart';
-import 'lib/Hue/Light.dart';
+import 'lib/Hue/Light/Light.dart';
 
 void main() {
   init();

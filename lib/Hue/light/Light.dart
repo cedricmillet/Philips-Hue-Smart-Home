@@ -1,6 +1,6 @@
 
 import 'package:http/http.dart' as http;
-import 'Hue.dart';
+import '../Hue.dart';
 import 'dart:convert';
 
 /**

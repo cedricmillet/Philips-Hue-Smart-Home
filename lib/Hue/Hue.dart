@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'Light.dart';  //  JSON serialisation
+
 
 
 abstract class Device { }

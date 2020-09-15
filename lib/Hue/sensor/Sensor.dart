@@ -1,4 +1,4 @@
-import 'Hue.dart';
+import '../Hue.dart';
 
 /**
  * Appareil Philips HUE : prise connectée
