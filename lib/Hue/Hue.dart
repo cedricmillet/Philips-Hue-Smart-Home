@@ -1,6 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:philips_hue_dart/Hue/core/BridgeRequest.dart';
+
 
 
 
@@ -35,15 +37,9 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
    * Detect and get bridge automatically
    */
   static Future<Hue> getBridgeAuto() async {
-    var res = await http.get("https://discovery.meethue.com/");
-    if(res.statusCode != 200) {
-      print('ERREUR DETECTION BRIDGE !');
-      print('Response status: ${res.statusCode}');
-      print('Response body: ${res.body}');
-    }
-    List bridges = jsonDecode(res.body);
-    if(bridges.length==0 || res.statusCode!=200) return null;
-    
+    final String resBody = await new BridgeRequest().get('https://discovery.meethue.com/');
+    if(resBody.length == 0) return null;
+    List bridges = jsonDecode(resBody);
     var bridge = bridges[0];
     return new Hue(bridge['id'], bridge['internalipaddress']);
   }
@@ -60,9 +56,8 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
    * Check if specified bridge is reachable on local network
    */
   static Future<bool> exists(Hue hueBridge) async {
-    var res = await http.get('http://${hueBridge.ip}/api/config');
-    if(res.statusCode != 200) return false;
-    if(res.body.length==0 || res.body.contains('error'))  return false;
+    final String resBody = await new BridgeRequest().get('http://${hueBridge.ip}/api/config');
+    if(resBody.length == 0) return false;
     return true;
   }
 
@@ -72,14 +67,10 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
    * Generate new bridge username
    */
   Future<bool> generateUsername(String deviceType) async {
-    var res = await http.post('http://${this._ip}/api/', body: '{"devicetype":"${deviceType}"}');
-    if(res.body.contains('success') && res.body.contains('username')) {
-      this._username = jsonDecode(res.body)[0]['success']['username'];
-      return true;
-    } else {
-      print("Failed getUsername() : " + res.body.toString());
-      return false;
-    }
+    final String resBody = await new BridgeRequest().post('http://${this._ip}/api/', '{"devicetype":"${deviceType}"}');
+    if(resBody.length == 0) return false;
+    if(!resBody.contains('username')) return false;
+    this._username = jsonDecode(resBody)[0]['success']['username'];
   }
 
   /**
