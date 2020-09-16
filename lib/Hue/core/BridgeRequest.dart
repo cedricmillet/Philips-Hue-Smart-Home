@@ -15,9 +15,7 @@ class BridgeRequest {
       onTimeout: () => null,
     );;
     if(res == null) return false;
-    if( res.statusCode != 200 
-        || res.body.contains('error')
-        || !res.body.contains('success')  ) {
+    if( !_isValidResponse(res)  ) {
       print( '[BridgeRequest.put()] - ERROR : ' + res.body.toString() );
       return false;
     }
@@ -34,9 +32,7 @@ class BridgeRequest {
       onTimeout: () => null
     );;
     if(res == null) return "";
-    if( res.statusCode != 200 
-        || res.body.contains('error')
-        || !res.body.contains('success')  ) {
+    if( !_isValidResponse(res)  ) {
       print( '[BridgeRequest.post()] - ERROR : ' + res.body.toString() );
       return "";
     }
@@ -53,15 +49,22 @@ class BridgeRequest {
       onTimeout: () => null,
     );;
     if(res == null) return "";
-    if( res.statusCode != 200 
-        || res.body.contains('error')
-        || !res.body.contains('success')  ) {
+    if( !_isValidResponse(res)  ) {
       print( '[BridgeRequest.get()] - ERROR : ' + res.body.toString() );
       return "";
     }
     return res.body;
   }
   
-
+  /**
+   * Returns true if specified HTTP.response from bridge is valid
+   */
+  bool _isValidResponse(res) {
+    if(res == null) return false;
+    if(res.statusCode != 200
+        || res.body.contains('error')
+        || !res.body.contains('success')) return false;
+    return true;
+  }
 
 }
