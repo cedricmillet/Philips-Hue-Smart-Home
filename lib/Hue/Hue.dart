@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:philips_hue_dart/Hue/core/BridgeRequest.dart';
+import 'core/BridgeRequest.dart';
 
 
 
