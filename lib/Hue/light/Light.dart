@@ -1,12 +1,12 @@
 
 import 'package:http/http.dart' as http;
-import '../Hue.dart';
+import '../core/Bridge.dart';
 import 'dart:convert';
 
 /**
  * Appareil Philips HUE : Ampoule connectée
  */
-class Light extends Hue {
+class Light extends Bridge {
   Light(String id, String ip, String username) : super(id, ip, username: username);
 
   //  Numéro pour les appels api --> /lights/${uid}/state
@@ -125,7 +125,7 @@ class Light extends Hue {
   /**
    * Get list of available lights
    */
-  static Future<List<Light>> getAll(Hue bridge, {bool onlyReachableLights=true}) async {
+  static Future<List<Light>> getAll(Bridge bridge, {bool onlyReachableLights=true}) async {
     if(bridge.username==null) throw 'Cannot getLights() without valid username.';
     
     var res = await http.get('http://${bridge.ip}/api/${bridge.username}/lights');
@@ -161,29 +161,3 @@ class Light extends Hue {
   }
   
 }
-
-/**
- * Builder Pattern --> build with Java extension
- */
-class LightBuilder extends Hue {
-  LightBuilder(String id, String ip, String username) : super(id, ip, username: username);
-
-  bool on;
-  String type;
-  String name;
-  String modelid;
-  String productname;
-  String productid;
-  String uniqueid;
-
-  void set_on(bool state) {   this.on = state;    }
-  void set_type(String type) {   this.type = type;    }
-  void set_name(String name) {   this.name = name;    }
-  void set_modelid(String modelid) {   this.modelid = modelid;    }
-
-  Light build() {
-    //return Light._builder(this);
-  }
-}
-
-

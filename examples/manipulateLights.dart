@@ -1,5 +1,5 @@
-import 'package:philips_hue_dart/Hue/Hue.dart';
 import 'package:philips_hue_dart/Hue/Light/Light.dart';
+import 'package:philips_hue_dart/Hue/core/Bridge.dart';
 
 /**
  * This example show how to manipulate Philips Hue Lights
@@ -10,7 +10,7 @@ void main() => demo();
 
 Future<void> demo() async {
   //  Get connected bridge on local network
-  Hue bridge = await Hue.getBridgeAuto();
+  Bridge bridge = await Bridge.getBridgeAuto();
   if(bridge==null) throw 'No Philips Hue Bridge on local network.';
 
   //  Test credentials

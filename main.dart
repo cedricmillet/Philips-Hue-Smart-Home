@@ -1,6 +1,5 @@
-
-import 'lib/Hue/Hue.dart';
 import 'lib/Hue/Light/Light.dart';
+import 'lib/Hue/core/Bridge.dart';
 
 void main() {
   init();
@@ -12,7 +11,7 @@ void init() async {
   print('--- STARTING ---');
 
   //  Get connected bridge on local network
-  Hue bridge = await Hue.getBridgeAuto();
+  Bridge bridge = await Bridge.getBridgeAuto();
   if(bridge==null) throw "BRIDGE INTROUVABLE";
 
   //  DEV ONLY
