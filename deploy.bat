@@ -27,7 +27,8 @@ rmdir %TARGET_PACKAGE_PATH% /s /q
 
 :: COPY
 echo ---- Copie nouveau package....
-robocopy %SOURCE_PACKAGE_PATH% %TARGET_PACKAGE_PATH% /s /e
+robocopy %SOURCE_PACKAGE_PATH% %TARGET_PACKAGE_PATH% /s /echo ---- Copie de pubspec.yaml....
+copy pubspec.yaml %TARGET_PACKAGE_PATH%\pubspec.yaml
 
 
 echo.
