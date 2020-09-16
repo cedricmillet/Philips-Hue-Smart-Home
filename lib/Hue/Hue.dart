@@ -91,9 +91,11 @@ class Hue extends Device {      //  https://developers.meethue.com/develop/hue-a
     return res;
   }
 
+  /**
+   * usefull functions for childrens
+   */
+  static bool stringIsBoolean(String s) { s = s.toLowerCase();  return s=="true"||s=="false" ? true : false; }
+  static bool string2Bool(String s) { return s.toLowerCase()=="true" ? true : false;  }
 }
-
-
-
 
 
