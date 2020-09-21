@@ -1,34 +1,33 @@
-import 'lib/Hue/Light/Light.dart';
+import 'lib/Hue/light/Light.dart';
 import 'lib/Hue/core/Bridge.dart';
 
 void main() {
   init();
 }
 
-
-
 void init() async {
   print('--- STARTING ---');
 
   //  Get connected bridge on local network
   Bridge bridge = await Bridge.getBridgeAuto();
-  if(bridge==null) throw "BRIDGE INTROUVABLE";
+  if (bridge == null) throw "BRIDGE INTROUVABLE";
 
   //  DEV ONLY
   bridge.username = 'wduRf8BKAppZ2noNbnpkp4r4pED0sas22A-1-UMV';
 
   //  PROD ONLY
-  if(bridge.username == null) {
+  if (bridge.username == null) {
     print('AUCUN USERNAME DETECTE... GENERATION.');
     bool generation = await bridge.generateUsername('chambre_cedric');
-    if(generation) {
-      print('La generation de votre username est un success : ${bridge.username}');
+    if (generation) {
+      print(
+          'La generation de votre username est un success : ${bridge.username}');
     }
   }
 
   print(bridge);
 
-  //  Get all lights 
+  //  Get all lights
   List<Light> lights = await Light.getAll(bridge);
 
   //  Display lights data
@@ -42,15 +41,14 @@ void init() async {
   for (Light l in lights) {
     //l.on();
     //l.bri(50);
-    l..on()..bri(10);
+    l
+      ..on()
+      ..bri(10);
   }
 
-  
-  
   //  Manipulate specific light
   Light m = lights[0] as Light;
   print('STATE: ${m.get_on()}');
 
   print('--- END OF INIT() ---');
 }
-
