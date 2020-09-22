@@ -4,6 +4,6 @@ dist: trusty
 
 unit_tests:
   script: 
-    - flutter pub get
-    - flutter pub run test
+    - pub get
+    - pub run test
 
