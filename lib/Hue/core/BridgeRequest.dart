@@ -61,7 +61,7 @@ class BridgeRequest {
    */
   bool _isValidResponse(res) {
     if (res == null) return false;
-    if (res.statusCode != 200 || res.body.contains('error')) return false;
+    if (res.statusCode != 200) return false;
     return true;
   }
 }

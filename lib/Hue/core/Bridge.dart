@@ -71,6 +71,14 @@ class Bridge extends Hue {
     this._username = jsonDecode(resBody)[0]['success']['username'];
   }
 
+  Future<bool> hasAuthorizedUsername() async {
+    final String resBody = await new BridgeRequest()
+        .get('http://${this._ip}/api/${this.username}');
+    //print(resBody);
+    if (resBody.length == 0) return false;
+    return (resBody.contains('lights')) ? true : false;
+  }
+
   /**
    * Debug
    */
