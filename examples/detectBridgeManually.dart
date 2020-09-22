@@ -20,7 +20,7 @@ Future<void> demo() async {
 
     List<Light> lights = await Light.getAll(bridge);
     for (Light light in lights) {
-      bool t = await light.off();
+      bool t = await light.on();
       print(t ? 'Light successfully updated' : 'Error when updating light');
     }
   }

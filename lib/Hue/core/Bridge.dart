@@ -6,19 +6,16 @@ class Bridge extends Hue {
   //  https://developers.meethue.com/develop/hue-api/
 
   //  |-------------->    Private attributes
-  String _id;
   String _ip;
   String _username;
 
   //  |-------------->    Constructor
-  Bridge(String id, String ip, {String username}) {
-    this._id = id;
+  Bridge(String ip, {String username}) {
     this._ip = ip;
     this._username = username;
   }
 
   //  |-------------->    Getters / Setters
-  String get id => _id;
   String get ip => _ip;
   String get username => _username;
   void set username(String uname) {
@@ -36,14 +33,14 @@ class Bridge extends Hue {
     if (resBody.length == 0) return null;
     List bridges = jsonDecode(resBody);
     var bridge = bridges[0];
-    return new Bridge(bridge['id'], bridge['internalipaddress']);
+    return new Bridge(bridge['internalipaddress']);
   }
 
   /**
    * Detect and get Hue bridge manually
    */
   static Future<Bridge> getBridgeManually(String internalipaddress) async {
-    final Hue manualBridge = new Bridge(null, internalipaddress);
+    final Hue manualBridge = new Bridge(internalipaddress);
     return (await Bridge.exists(manualBridge)) ? manualBridge : null;
   }
 
@@ -85,7 +82,7 @@ class Bridge extends Hue {
   String toString() {
     String res = '';
     res +=
-        '\x1B[94mBRIDGE\t{ID:\t${this._id}\tIPv4:\t${this._ip}\tusername:\t${this._username}}\x1B[0m';
+        '\x1B[94mBRIDGE\tIPv4:\t${this._ip}\tusername:\t${this._username}}\x1B[0m';
     return res;
   }
 }
