@@ -21,3 +21,12 @@ A little library written in Dart, in order to manipulate sensors & lights states
 ## Dependencies
 * __http__ : send/receive data from philips hue bridge device on local network
 * __test__ : unit testing...
+
+## UML
+
+graph TD
+  A[Christmas] -->|Get money| B(Go shopping)
+  B --> C{Let me think}
+  C -->|One| D[Laptop]
+  C -->|Two| E[iPhone]
+  C -->|Three| F[fa:fa-car Car]
