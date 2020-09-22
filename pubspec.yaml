@@ -3,12 +3,6 @@ version: 0.0.1
 homepage: https://github.com/cedricmillet/Philips-Hue-Smart-Home
 description: A simple package to control Philips Hue devices
 
-
-
-environment:
-  sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.17.0 <2.0.0"
-
 dependencies:
   http: ^0.12.2
 
