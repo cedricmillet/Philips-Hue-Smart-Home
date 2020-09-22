@@ -1,9 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class BridgeRequest {
-  
   int timeoutInSeconds = 2;
-
 
   /**
    * Send PUT request
@@ -11,12 +9,13 @@ class BridgeRequest {
    */
   Future<bool> put(String uri, String body) async {
     var res = await http.put(uri, body: body).timeout(
-      Duration(seconds: timeoutInSeconds),
-      onTimeout: () => null,
-    );;
-    if(res == null) return false;
-    if( !_isValidResponse(res)  ) {
-      print( '[BridgeRequest.put()] - ERROR : ' + res.body.toString() );
+          Duration(seconds: timeoutInSeconds),
+          onTimeout: () => null,
+        );
+    ;
+    if (res == null) return false;
+    if (!_isValidResponse(res)) {
+      print('[BridgeRequest.put()] - ERROR : ' + res.body.toString());
       return false;
     }
     return true;
@@ -27,13 +26,13 @@ class BridgeRequest {
    * @returns <String>response.body
    */
   Future<String> post(String uri, String body) async {
-    var res = await http.put(uri, body: body).timeout(
-      Duration(seconds: timeoutInSeconds),
-      onTimeout: () => null
-    );;
-    if(res == null) return "";
-    if( !_isValidResponse(res)  ) {
-      print( '[BridgeRequest.post()] - ERROR : ' + res.body.toString() );
+    var res = await http
+        .put(uri, body: body)
+        .timeout(Duration(seconds: timeoutInSeconds), onTimeout: () => null);
+    ;
+    if (res == null) return "";
+    if (!_isValidResponse(res)) {
+      print('[BridgeRequest.post()] - ERROR : ' + res.body.toString());
       return "";
     }
     return res.body;
@@ -45,26 +44,24 @@ class BridgeRequest {
    */
   Future<String> get(String uri) async {
     var res = await http.get(uri).timeout(
-      Duration(seconds: timeoutInSeconds),
-      onTimeout: () => null,
-    );;
-    if(res == null) return "";
-    if( !_isValidResponse(res)  ) {
-      print( '[BridgeRequest.get()] - ERROR : ' + res.body.toString() );
+          Duration(seconds: timeoutInSeconds),
+          onTimeout: () => null,
+        );
+    ;
+    if (res == null) return "";
+    if (!_isValidResponse(res)) {
+      print('[BridgeRequest.get()] - ERROR : ' + res.body.toString());
       return "";
     }
     return res.body;
   }
-  
+
   /**
    * Returns true if specified HTTP.response from bridge is valid
    */
   bool _isValidResponse(res) {
-    if(res == null) return false;
-    if(res.statusCode != 200
-        || res.body.contains('error')
-        || !res.body.contains('success')) return false;
+    if (res == null) return false;
+    if (res.statusCode != 200 || res.body.contains('error')) return false;
     return true;
   }
-
 }
