@@ -24,9 +24,10 @@ A little library written in Dart, in order to manipulate sensors & lights states
 
 ## UML
 
-@startuml firstDiagram
-
-Alice -> Bob: Hello
-Bob -> Alice: Hi!
-
-@enduml
+```mermaid
+sequenceDiagram
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+Alice -> Bob:Another authentication Response
+Bob --> Alice: Another authentication Response
+```
