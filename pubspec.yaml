@@ -5,4 +5,7 @@ environment:
   flutter: ">=1.17.0 <2.0.0"
 
 dependencies:
+  http: ^0.12.2
+
+dev_dependencies:
   test: ^1.15.4
