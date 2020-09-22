@@ -1,4 +1,4 @@
-import 'package:philips_hue_dart/Hue/core/BridgeRequest.dart';
+import 'package:philips_hue_dart/Hue/Hue.dart';
 import 'package:test/test.dart';
 
 void main() {

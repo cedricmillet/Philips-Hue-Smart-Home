@@ -1,5 +1,4 @@
-import 'package:philips_hue_dart/Hue/light/Light.dart';
-import 'package:philips_hue_dart/Hue/core/Bridge.dart';
+import 'package:philips_hue_dart/Hue/Hue.dart';
 
 /**
  * This example show how to manipulate Philips Hue Lights

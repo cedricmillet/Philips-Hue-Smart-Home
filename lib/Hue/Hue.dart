@@ -1,9 +1,16 @@
+/* Export package content */
+export 'core/Bridge.dart';
+export 'core/BridgeRequest.dart';
+export 'core/BridgeDiscovery.dart';
+export 'light/Light.dart';
+export 'sensor/Sensor.dart';
 
 /**
  * Hue Package
  */
-class Hue {      //  https://developers.meethue.com/develop/hue-api/
-  
+class Hue {
+  //  https://developers.meethue.com/develop/hue-api/
+
   /**
    * Debug
    */
@@ -16,8 +23,12 @@ class Hue {      //  https://developers.meethue.com/develop/hue-api/
   /**
    * usefull functions for childrens
    */
-  static bool stringIsBoolean(String s) { s = s.toLowerCase();  return s=="true"||s=="false" ? true : false; }
-  static bool string2Bool(String s) { return s.toLowerCase()=="true" ? true : false;  }
+  static bool stringIsBoolean(String s) {
+    s = s.toLowerCase();
+    return s == "true" || s == "false" ? true : false;
+  }
+
+  static bool string2Bool(String s) {
+    return s.toLowerCase() == "true" ? true : false;
+  }
 }
-
-
