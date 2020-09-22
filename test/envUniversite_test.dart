@@ -52,15 +52,10 @@ void main() {
     expect(check, true);
   });
 
-/*
-  test('detect lights on network', () async {
-    try {
-      final Bridge bridge = await Bridge.getBridgeManually(ip);
-      List<Light> lights = await Light.getAll(bridge);
-      print(lights);
-      expect(true, true);
-    } catch (e) {
-      expect(false, true);
-    }
-  });*/
+  test('detect at least one light connected to bridge', () async {
+    final Bridge bridge = await Bridge.getBridgeManually(ip);
+    bridge.username = usernameToken;
+    List<Light> lights = await Light.getAll(bridge);
+    expect(lights.length > 0, true);
+  });
 }

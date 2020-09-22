@@ -167,7 +167,7 @@ class Light extends Bridge {
 
     var lights = jsonDecode(res.body);
     //print(lights);
-    print("LIGHTS FOUND : " + lights.length.toString());
+
     List<Light> availableLightsArray = new List<Light>();
 
     for (int i = 1; i <= lights.length; i++) {
