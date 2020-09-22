@@ -2,6 +2,7 @@
 export 'core/Bridge.dart';
 export 'core/BridgeRequest.dart';
 export 'core/BridgeDiscovery.dart';
+export 'core/misc.dart';
 export 'light/Light.dart';
 export 'sensor/Sensor.dart';
 

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import '../Hue.dart';
 import 'BridgeRequest.dart';
+import 'misc.dart';
 
 class Bridge extends Hue {
   //  https://developers.meethue.com/develop/hue-api/
@@ -28,6 +29,7 @@ class Bridge extends Hue {
    * Detect and get bridge automatically
    */
   static Future<Bridge> getBridgeAuto() async {
+    if (!await isInternetConnected()) return null;
     final String resBody =
         await new BridgeRequest().get('https://discovery.meethue.com/');
     if (resBody.length == 0) return null;
