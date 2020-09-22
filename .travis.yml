@@ -12,4 +12,4 @@ deploy:
   skip_cleanup: true
   script: cloudsmith push python --republish cloudsmith/testing-public dist/cloudsmith_python_example-100-py2.py3-none-any.whl
   on:
-    branch: master
+    branch: master 
