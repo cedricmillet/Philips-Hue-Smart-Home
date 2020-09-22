@@ -2,6 +2,9 @@
 
 # Hue Smart Home Controller
 
+* develop : [![Build Status](https://travis-ci.com/cedricmillet/Philips-Hue-Smart-Home.svg?branch=develop)](https://travis-ci.com/cedricmillet/Philips-Hue-Smart-Home)
+* master : [![Build Status](https://travis-ci.com/cedricmillet/Philips-Hue-Smart-Home.svg?branch=master)](https://travis-ci.com/cedricmillet/Philips-Hue-Smart-Home)
+
 A little library written in Dart, in order to manipulate sensors & lights states of Philips Hue family.
 
 * [Official Philips Hue documentation](https://developers.meethue.com/)
