@@ -2,14 +2,6 @@ os: linux
 language: dart
 dist: trusty
 
-
-script:
-  - python setup.py bdist_wheel
-
-before_deploy:
-  - pyenv global 3.6
-  - pip install cloudsmith-cli
-
 unit_tests:
   script: 
     - pub get
