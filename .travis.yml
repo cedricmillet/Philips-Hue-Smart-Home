@@ -1,4 +1,7 @@
+os: linux
+language: dart
 dist: trusty
+
 
 script:
   - python setup.py bdist_wheel
@@ -7,9 +10,8 @@ before_deploy:
   - pyenv global 3.6
   - pip install cloudsmith-cli
 
-deploy:
-  provider: script
-  skip_cleanup: true
-  script: cloudsmith push python --republish cloudsmith/testing-public dist/cloudsmith_python_example-100-py2.py3-none-any.whl
-  on:
-    branch: master 
+unit_tests:
+  script: 
+    - pub get
+    - pub run test
+
