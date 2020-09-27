@@ -34,6 +34,8 @@ class Bridge extends Hue {
         await new BridgeRequest().get('https://discovery.meethue.com/');
     if (resBody.length == 0) return null;
     List bridges = jsonDecode(resBody);
+    if(bridges.length == 0) return null;
+    
     var bridge = bridges[0];
     return new Bridge(bridge['internalipaddress']);
   }
